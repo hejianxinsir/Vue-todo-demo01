@@ -1,16 +1,17 @@
 <template>
   <div id="app">
-    <He/>
+    <test/>
   </div>
 </template>
 
 <script>
 import He from './components/He'
+import test from './components/test'
 
 export default {
   name: 'App',
   components: {
-    He
+    test
   }
 }
 </script>
