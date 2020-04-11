@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>自定义指令</title>
+</head>
+<body>
+  <!-- 需求: 打开页面就获取焦点 -->
+  <div id="test">
+    获取焦点: <input v-xxx type="text"><br>
+    <!-- cuihua: <div v-cuihua:goudan.a.b.c="obq"></div> -->
+    <div v-uuu:iii.a.b.c="ccc"></div>
+  </div>
+
+  <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+  <script>
+    Vue.directive('xxx', {
+      inserted: function(el){
+        el.focus()
+      }
+    })
+
+    Vue.directive('uuu',{
+      bind: function(el, binding, vnode){
+        let keys = []
+        for(let key in vnode){
+          keys.push(key)
+        }
+        el.innerHTML =
+          'name: ' + binding.name + '/' +
+          'value ' + binding.value + '/' + 
+          'expression ' + binding.expression + '/' + 
+          'argument ' + binding.arg+ '/' + 
+          'vnode 中的 keys ' + keys.join('--') 
+          // 'modifiers ' + JSON.stringify(binding.modifiers)
+      }
+    })
+
+    // Vue.directive('cuihua',{
+    //   bind: function(el, binding){
+    //     el.innerHTML = 
+    //       'name'+ ':' + binding.name + '<br>'+
+    //       'value'+ ':' + binding.value + '<br>'+
+    //       'expression'+ ':' + binding.expression+'<br>'+
+    //       'argument'+ ':' + binding.argument + '<br>'+
+    //       'modifiers' + ':' + JSON.stringify(binding.modifiers)+ '<br>'
+    //   }
+    // })
+
+    var test = new Vue({
+      el: '#test',
+      data: {
+        ccc: '1111'
+      }
+    })
+  </script>
+</body>
+</html>
