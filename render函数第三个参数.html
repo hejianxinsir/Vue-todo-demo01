@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>render函数第三个参数</title>
+</head>
+<body>
+  <!-- 第三个参数可选。下面复习了 render 函数的第二个参数
+    第三个参数：可选。类型是 String  Array . Array 类型用得多一些。
+    第三个参数代表子节点
+  -->
+  <div id="text">
+    <child></child>
+  </div>
+
+  <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+  <script>
+    var text = new Vue({
+      el: '#text',
+      components: {
+        'child': {
+          render: function(createElement){
+            return createElement('div',[
+              createElement('h1','我是h1'),
+              createElement('h2', {
+                style: {
+                  color: 'brown'
+                }
+              },'我是h2'),
+              createElement('h3','我是h3')
+            ])
+          }
+          // render: function(createElement){
+          //   return createElement('h1',{
+          //     class: {
+          //       foo: true,
+          //       bar: false
+          //     },
+          //     style: {
+          //       color: 'red',
+          //       fontSize: '100px'
+          //     },
+          //     attrs: {
+          //       id: 'hehe',
+          //       src: 'www.baidu.com'
+          //     },
+          //     domProps: {
+          //       innerText: '我是innerText'
+          //     }
+          //   })
+          // }
+        }
+      }
+    })
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>render函数的第一个参数</title>
+</head>
+<body>
+
+  <div id="test">
+    <child>
+      <p slot="xxx">故人具鸡黍</p>
+      <p slot="yyy">邀我至田家</p>
+      <p slot="ooo">绿树村边壑</p>
+    </child>
+  </div>
+
+  <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+  <script>
+    var test = new Vue({
+      el: '#test',
+      components: {
+        'child': {
+          render: function(createElement){
+            let xxx = this.$slots.xxx
+            console.log(xxx)
+            return createElement('div',this.$slots.yyy)
+          }
+        }
+      }
+
+    })
+  </script>
+</body>
+</html>

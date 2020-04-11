@@ -41,26 +41,103 @@
 
     <!-- 单项数据流的应用场景2 -->
     <!-- 需求：输入即可改变div的样式 -->
+    <!-- 数据验证 -->
     <div id="test4">
       <input type="text" v-model="width">
       <ccc :width="width"></ccc>
+      <ccc :a="a" :b="b" :h=h></ccc>
+    </div>
+    <hr>
+
+    <!-- 点击切换 h1 h2 h3  -->
+    <div id="test5">
+      <com1 :level="level"></com1>
+      <button @click="change1">change1</button>
+    </div>
+    <hr>
+
+    <!-- 用 render 函数切换 h1 h2 h3  -->
+    <div id="test6">
+      <child1 :level="level">
+        我是标题
+      </child1>
     </div>
 
 
 
 
+    <!-- template 下只允许有一个子节点，也就是说，要用一个 div 包住其他代 -->
+    <!-- 接下来使用 render 函数把这个例子再写一遍 -->
+    <template id="temp1">
+      <div>
+        <h1 v-if="level===1">
+          <slot>我是level1</slot>
+        </h1>
+        <h1 v-else-if="level===2">
+          <slot>我是level2</slot>
+        </h1>
+        <h1 v-else="level===3">
+          <slot>我是level3</slot>
+        </h1>
+      </div>
+    </template>
 
     <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
     <script>
+      // 使用 render 函数定义组件
+      Vue.component('child1', {
+        render: function(createElement){
+          return createElement('h'+this.level, this.$slots.default)
+        },
+        props: ['level']
+      })
+
+      var test6 = new Vue({
+        el: '#test6',
+        data: {
+          level: 1
+        }
+      })
+
+
+
+      var test5 = new Vue({
+        el: '#test5',
+        data: {
+          level: 1
+        },
+        components: {
+          'com1': {
+            props: ['level'],
+            template: '#temp1'
+          }
+        },
+        methods: {
+          change1(){
+            if(this.level<3){
+              this.level+=1
+            }
+          }
+        }
+      })
+
       var test4 = new Vue({
         el: '#test4',
         data: {
-          width: ''
+          width: '',
+          a: 111,
+          b: 9999,
+          h: true
         },
         components: {
           'ccc': {
-            props: ['width'],
-            template: '<div :style="style">我是ccc组件</div>',
+            props: {
+              width: {type: String},
+              a: {type: String},
+              b: {type: String},
+              h: {type: Number, default: 777}
+            },
+            template: '<div :style="style">我是ccc组件--a:{{a}}--b:{{b}}--h:{{h}}</div>',
             computed: {
               style(){
                 return {

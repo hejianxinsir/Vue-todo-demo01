@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>render函数的第一个参数</title>
+</head>
+<body>
+  <!-- 见案例。render 函数的参数必须是 createElement ,这是规定好的。 
+    createElement 里的第一个参数可以是： String--html标签 Function Object--数据选项
+  -->
+
+  <div id="test">
+    <aaa></aaa> 
+  </div>
+
+
+
+   <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+  <script>
+    var test = new Vue({
+      el: '#test',
+      data: {
+        a: 1 
+      },
+      components: {
+        'aaa': {
+          render: function(createElement){
+            // return createElement('h1',this.$slots.default) -- String 参数
+            // return createElement({   -- Object 参数
+            //   template: '<h1>档案扥了阿扥</h1>'
+            // })
+            // Function 参数
+              return createElement(function(){
+                console.log('11111')
+              })
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>
